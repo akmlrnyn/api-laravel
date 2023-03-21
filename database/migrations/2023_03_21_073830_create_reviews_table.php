@@ -17,7 +17,7 @@ class CreateReviewsTable extends Migration
             $table->id();
             $table->unsignedBigInteger('product_id');
             $table->unsignedBigInteger('user_id');
-            $table->string('comment_content');
+            $table->text('review_content');
             $table->timestamps();
 
             $table->softDeletes();
