@@ -16,7 +16,7 @@ class ProductController extends Controller
     }
 
     public function show($id){
-        $product = Product::with('seller:id,firstname')->findOrFail($id);
+        $product = Product::with('seller:id,firstname', 'collab:id,series')->findOrFail($id);
         return new ProductDetailResource($product);
     }
         

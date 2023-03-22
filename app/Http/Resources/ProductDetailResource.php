@@ -21,7 +21,8 @@ class ProductDetailResource extends JsonResource
         'price' => $this -> price,
         'owner_id' => $this -> owner,
         'owner' => $this -> whenLoaded('seller'),
-        // 'collab_type' => $this -> whenLoaded('type'),
+        'collab_id' => $this -> type,
+        'type' => $this -> whenLoaded('collab'),
         'created_at' => date_format($this -> created_at, "Y/m/d H:i:s"),
         ];
     }

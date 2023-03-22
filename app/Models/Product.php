@@ -22,4 +22,9 @@ class Product extends Model
     {
         return $this -> belongsTo(User::class, 'owner', 'id');
     }
+
+    public function collab(): BelongsTo
+    {
+        return $this -> belongsTo(Collab::class, 'type', 'id');
+    }
 }
