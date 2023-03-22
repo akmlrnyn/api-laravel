@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\AuthenticationController;
 use App\Http\Controllers\ProductController;
+use App\Http\Middleware\PostOwner;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -21,6 +22,9 @@ use Illuminate\Support\Facades\Route;
 // });
 Route::middleware('auth:sanctum')->group(function(){
     Route::get('/products', [ProductController::class, 'index']);
+    Route::get('/products/{id}', [ProductController::class, 'show']);
+    Route::delete('/products/{id}', [ProductController::class, 'delete'])->middleware(['product.owner']);
+    Route::post('/products/{id}', [ProductController::class, 'update'])->middleware(['product.owner']);
     Route::get('/products/{id}', [ProductController::class, 'show']);
     Route::post('/products', [ProductController::class, 'store']);
     Route::get('/logout', [AuthenticationController::class, 'logout']);

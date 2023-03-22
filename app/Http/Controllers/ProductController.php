@@ -36,5 +36,31 @@ class ProductController extends Controller
 
        return new ProductDetailResource($product->loadMissing('seller:id,firstname', 'collab:id,series'));
     }
+
+    function update(Request $request, $id)
+    {
+        $request -> validate([
+            'name' => 'required|max:255',
+            'price' => 'required',
+            'desc' => 'required',
+        ]);
+
+        $product = Product::findOrFail($id);
+        $product->update($request->all());
+
+        return new ProductDetailResource($product->loadMissing('seller:id,firstname', 'collab:id,series'));
+     }
+
+     public function delete(Request $request, $id)
+     {
+        $product = Product::findOrFail($id);
+        $product -> delete();
+
+        return response()->json([
+            'message' => 'product succesfully deleted'
+        ]);
+
+        return new ProductDetailResource($product->loadMissing('seller:id,firstname', 'collab:id,series'));
+     }
         
 }
