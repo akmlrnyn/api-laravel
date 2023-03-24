@@ -41,4 +41,10 @@ class AuthenticationController extends Controller
         $user = Auth::user();
         return response()->json($user);
    }
+
+   public function register(Request $request){
+        $user = User::create(Request('username', 'firstname', 'lastname', 'email', 'password'));
+        auth()->login($user);
+        return $user->createToken('user login')->plainTextToken;
+   }
 }
