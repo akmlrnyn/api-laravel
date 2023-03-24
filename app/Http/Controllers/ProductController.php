@@ -7,6 +7,7 @@ use App\Http\Resources\ProductResource;
 use App\Models\Product;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Storage;
 
 class ProductController extends Controller
 {
@@ -31,6 +32,26 @@ class ProductController extends Controller
             'type' => 'exists:collabs,id'
         ]);
 
+        $image = null;
+        $extensivalid = ['jpg', 'jpeg', 'png'];
+        $fileName = $this -> generateRandomString();
+        $extension = $request -> file -> extension();
+        $image = $fileName. '.' .$extension;
+
+        
+        if(!in_array($extension, $extensivalid)){
+            return response()->json([
+                "message" => "wrong file"
+            ]);
+        }
+
+
+        if ($request -> file) {
+            Storage::putFileAs('image', $request->file, $image);
+        }
+
+        
+       $request['image'] = $image;
        $request['user_id'] = Auth::user()->id;
        $product = Product::create($request->all());
 
@@ -62,5 +83,15 @@ class ProductController extends Controller
 
         return new ProductDetailResource($product->loadMissing('seller:id,firstname', 'collab:id,series'));
      }
+
+    public function generateRandomString($length = 20) {
+        $characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
+        $charactersLength = strlen($characters);
+        $randomString = '';
+        for ($i = 0; $i < $length; $i++) {
+            $randomString .= $characters[random_int(0, $charactersLength - 1)];
+        }
+        return $randomString;
         
+}
 }

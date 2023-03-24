@@ -23,6 +23,7 @@ class ProductDetailResource extends JsonResource
         'owner' => $this -> whenLoaded('seller'),
         'collab_id' => $this -> type,
         'type' => $this -> whenLoaded('collab'),
+        'image' => $this -> image,
         'reviews_total' => $this -> whenLoaded('reviews', function(){
            return count($this->reviews); 
         }),
