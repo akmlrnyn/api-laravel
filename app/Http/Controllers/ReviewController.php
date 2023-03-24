@@ -22,5 +22,22 @@ class ReviewController extends Controller
         return response()->json($review);
     }
 
+    public function update(Request $request, $id){
+        $request -> validate([
+            'product_id' => 'exists:products,id',
+            'review_content' => 'required',
+            'rating' => 'required'
+        ]);
+
+        $review = Review::findOrFail($id);
+        $review->update($request->all());
+
+
+        return response()->json([
+            "message" => "review succesfully updated"
+        ]);
+
+    }
+
    
 }

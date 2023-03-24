@@ -37,7 +37,7 @@ class ProductController extends Controller
        return new ProductDetailResource($product->loadMissing('seller:id,firstname', 'collab:id,series'));
     }
 
-    function update(Request $request, $id)
+    public function update(Request $request, $id)
     {
         $request -> validate([
             'name' => 'required|max:255',
