@@ -30,7 +30,7 @@ Route::middleware('auth:sanctum')->group(function(){
     Route::post('/products', [ProductController::class, 'store']);
 
     Route::post('/reviews', [ReviewController::class, 'store']);
-    Route::post('/reviews/{id}', [ReviewController::class, 'update']);
+    Route::post('/reviews/{id}', [ReviewController::class, 'update'])->middleware(['review.owner']);
 
     Route::get('/logout', [AuthenticationController::class, 'logout']);
     Route::get('/me', [AuthenticationController::class, 'me']);
