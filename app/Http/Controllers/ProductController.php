@@ -34,7 +34,7 @@ class ProductController extends Controller
        $request['user_id'] = Auth::user()->id;
        $product = Product::create($request->all());
 
-       return new ProductDetailResource($product->loadMissing('seller:id,firstname', 'collab:id,series'));
+       return new ProductDetailResource($product->loadMissing(['seller:id,firstname', 'collab:id,series']));
     }
 
     public function update(Request $request, $id)
@@ -48,7 +48,7 @@ class ProductController extends Controller
         $product = Product::findOrFail($id);
         $product->update($request->all());
 
-        return new ProductDetailResource($product->loadMissing('seller:id,firstname', 'collab:id,series'));
+        return new ProductDetailResource($product->loadMissing(['seller:id,firstname', 'collab:id,series']));
      }
 
      public function delete(Request $request, $id)

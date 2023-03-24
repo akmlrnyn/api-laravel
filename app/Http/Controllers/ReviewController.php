@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Resources\ReviewResource;
 use App\Models\Review;
 use Illuminate\Http\Request;
 
@@ -19,7 +20,7 @@ class ReviewController extends Controller
         $request['user_id'] = auth()->user()->id;
         $review = Review::create($request->all());
 
-        return response()->json($review);
+        return new ReviewResource($review -> loadMissing(['reviewer:id,username']));
     }
 
     public function update(Request $request, $id){
@@ -33,9 +34,7 @@ class ReviewController extends Controller
         $review->update($request->all());
 
 
-        return response()->json([
-            "message" => "review succesfully updated"
-        ]);
+        return new ReviewResource($review -> loadMissing(['reviewer:id,username']));
 
     }
 
