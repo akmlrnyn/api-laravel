@@ -23,6 +23,15 @@ class ProductDetailResource extends JsonResource
         'owner' => $this -> whenLoaded('seller'),
         'collab_id' => $this -> type,
         'type' => $this -> whenLoaded('collab'),
+        'reviews_total' => $this -> whenLoaded('reviews', function(){
+           return count($this->reviews); 
+        }),
+        'reviews' => $this -> whenLoaded('reviews', function(){
+            return collect($this->reviews)->each(function($reviews){
+            $reviews -> reviewer;
+            return $reviews;
+            });
+        }),
         'created_at' => date_format($this -> created_at, "Y/m/d H:i:s"),
         ];
     }

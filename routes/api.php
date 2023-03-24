@@ -25,12 +25,13 @@ Route::middleware('auth:sanctum')->group(function(){
     Route::get('/products', [ProductController::class, 'index']);
     Route::get('/products/{id}', [ProductController::class, 'show']);
     Route::delete('/products/{id}', [ProductController::class, 'delete'])->middleware(['product.owner']);
-    Route::post('/products/{id}', [ProductController::class, 'update'])->middleware(['product.owner']);
+    Route::patch('/products/{id}', [ProductController::class, 'update'])->middleware(['product.owner']);
     Route::get('/products/{id}', [ProductController::class, 'show']);
     Route::post('/products', [ProductController::class, 'store']);
 
     Route::post('/reviews', [ReviewController::class, 'store']);
-    Route::post('/reviews/{id}', [ReviewController::class, 'update'])->middleware(['review.owner']);
+    Route::delete('/reviews/{id}', [ReviewController::class, 'delete']);
+    Route::patch('/reviews/{id}', [ReviewController::class, 'update'])->middleware(['review.owner']);
 
     Route::get('/logout', [AuthenticationController::class, 'logout']);
     Route::get('/me', [AuthenticationController::class, 'me']);

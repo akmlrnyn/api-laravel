@@ -13,11 +13,11 @@ class ProductController extends Controller
     public function index()
     {
         $products = Product::all();
-        return ProductResource::collection($products);
+        return  ProductDetailResource::collection($products->loadMissing(['seller:id,firstname', 'collab:id,series', 'reviews:id,product_id,user_id,review_content']));
     }
 
     public function show($id){
-        $product = Product::with('seller:id,firstname', 'collab:id,series')->findOrFail($id);
+        $product = Product::with(['seller:id,firstname', 'collab:id,series', 'reviews:id,product_id,user_id,review_content'])->findOrFail($id);
         return new ProductDetailResource($product);
     }
 
