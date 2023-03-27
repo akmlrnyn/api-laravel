@@ -114,4 +114,13 @@ class ProductController extends Controller
         return $randomString;
         
     }
+
+    public function search(Request $request)
+    {
+        $query = $request -> input('query');
+
+
+        $products = Product::query()->where('NAME', 'LIKE', '%'.$query.'%')->get();
+        return  ProductDetailResource::collection($products->loadMissing(['seller:id,firstname', 'collab:id,series', 'reviews:id,product_id,user_id,review_content']));
+    }
 }
