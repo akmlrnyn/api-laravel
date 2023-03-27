@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AuthenticationController;
+use App\Http\Controllers\PayController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\ReviewController;
 use App\Http\Middleware\PostOwner;
@@ -34,6 +35,7 @@ Route::middleware('auth:sanctum')->group(function(){
     Route::patch('/reviews/{id}', [ReviewController::class, 'update'])->middleware(['review.owner']);
 
     Route::get('/logout', [AuthenticationController::class, 'logout']);
+    Route::post('/products/{prodid}/pay', [PayController::class, 'pay']);
     Route::get('/me', [AuthenticationController::class, 'me']);
 });
 

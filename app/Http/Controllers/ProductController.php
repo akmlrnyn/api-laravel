@@ -38,7 +38,7 @@ class ProductController extends Controller
         $extension = $request -> file -> extension();
         $image = $fileName. '.' .$extension;
 
-        
+
         if(!in_array($extension, $extensivalid)){
             return response()->json([
                 "message" => "wrong file"
@@ -66,6 +66,26 @@ class ProductController extends Controller
             'desc' => 'required',
         ]);
 
+        $image = null;
+        $extensivalid = ['jpg', 'jpeg', 'png'];
+        $fileName = $this -> generateRandomString();
+        $extension = $request -> file -> extension();
+        $image = $fileName. '.' .$extension;
+
+        
+        if(!in_array($extension, $extensivalid)){
+            return response()->json([
+                "message" => "wrong file"
+            ]);
+        }
+
+
+        if ($request -> file) {
+            Storage::putFileAs('image', $request->file, $image);
+        }
+
+        
+        $request['image'] = $image;
         $product = Product::findOrFail($id);
         $product->update($request->all());
 
@@ -93,5 +113,5 @@ class ProductController extends Controller
         }
         return $randomString;
         
-}
+    }
 }
